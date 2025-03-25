@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "dependencies": {
+    "dayjs": "^1.11.13",
+    "luxon": "^3.5.0"
+  }
+}
