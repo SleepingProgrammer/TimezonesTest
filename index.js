@@ -16,40 +16,27 @@ console.log("End: " + endDate);
  
 
 const serverToLocal = (date) => {
+    console.log("Converting " + date + " to " + toTz);
     const serverDate = DateTime.fromISO(date, { zone: toTz });
-
-    console.log("Server Date: " + serverDate.toString());
-
 
     // convert time to time from fromTz
     const localDate = serverDate.setZone(fromTz);
-    console.log("Local Date: " + localDate.toString());
     return localDate;
 }
 
 function convertLocalToServer(isoDate, userTimeZone) {
     try {
+        console.log("Converting " + isoDate + " to " + userTimeZone);
       // Convert ISO to User's Local Time
       const userLocalDate = DateTime.fromISO(isoDate).setZone(
         userTimeZone
       );
-  
-      if (!userLocalDate.isValid) {
-        throw new Error('Invalid date or timezone');
-      }
-  
-      console.log('User Local Time:', userLocalDate.toString());
-  
       // Convert to UTC for Storage
       const serverDate = userLocalDate.setZone(
         toTz 
       );
-      console.log('Converted to UTC:', serverDate.toString());
-  
       // Format for MySQL (yyyy-MM-dd HH:mm:ss)
       const mysqlDateTime = serverDate.toJSDate();
-      console.log('MySQL DateTime (UTC):', mysqlDateTime);
-  
       return mysqlDateTime;
     } catch (error) {
       console.error('Conversion Error:', error.message);
@@ -66,7 +53,6 @@ console.log("Saved to DB: " + storedStartDate);
 console.log("Converted to Local Timezone: " + serverToLocal(
     storedStartDate.toISOString()
 ).toISO());
-
 
 console.log("-------------------END DATE----------------------");
 
